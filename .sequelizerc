@@ -1,0 +1,11 @@
+// 1. passo pra configurar o sequelize
+
+const { resolve } = require('path')
+//const path = require('path');
+//path.resolve()
+module.exports = {
+  config: resolve('./src/config/database.js'), //2. passo criar esse arquivo e os dados do bd
+  'models-path': resolve('./src/models'),
+  'migrations-path': resolve('./src/database/migrations'),// essa pasta migrations se cria com comando mais a frente
+  'seeders-path': resolve('./src/database/seeds'), // essa tbm
+};
