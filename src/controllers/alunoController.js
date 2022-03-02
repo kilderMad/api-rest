@@ -7,14 +7,14 @@ class AlunoController {
   }
 
   async create(req, res) {
-    const aluno = await Aluno.findOne(req.body.email);
-    if (aluno) {
-      return res.json({
-        errors: ['Aluno ja existe'],
+    try {
+      const newAluno = await Aluno.create(req.body);
+      return res.json(newAluno);
+    } catch (e) {
+      return res.status(400).json({
+        errors: e.errors.map((err) => err.message),
       });
     }
-    const newAluno = await Aluno.create(req.body);
-    return res.json(newAluno);
   }
 
   async show(req, res) {
@@ -34,7 +34,7 @@ class AlunoController {
       }
       return res.json(aluno);
     } catch (e) {
-      return res.json({
+      return res.status(400).json({
         errors: e.errors.map((err) => err.message),
       });
     }
@@ -58,7 +58,7 @@ class AlunoController {
       await aluno.destroy();
       return res.json('Aluno Apagado');
     } catch (e) {
-      return res.json({
+      return res.status(400).json({
         errors: e.errors.map((err) => err.message),
       });
     }
@@ -82,7 +82,7 @@ class AlunoController {
       const alunoUp = await aluno.update(req.body);
       return res.json(alunoUp);
     } catch (e) {
-      return res.json({
+      return res.status(400).json({
         errors: e.errors.map((err) => err.message),
       });
     }
