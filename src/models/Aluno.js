@@ -52,6 +52,10 @@ export default class Aluno extends Model {
     });
     return this;
   }
+
+  static associate(models) {
+    this.hasMany(models.Foto, { foreignKey: 'aluno_id' });
+  }
 }
 
 // para conectar o model com o sequelize na pasta database criar index.js

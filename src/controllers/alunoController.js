@@ -1,8 +1,16 @@
 import Aluno from '../models/Aluno';
+import Foto from '../models/Foto';
 
 class AlunoController {
   async index(req, res) {
-    const alunos = await Aluno.findAll();
+    const alunos = await Aluno.findAll({
+      attributes: ['id', 'nome', 'sobrenome', 'email', 'idade'], // dados que quero
+      order: [['id', 'DESC'], [Foto, 'id', 'DESC']], // fator de ordem e se é CRES ou DESC
+      include: {
+        model: Foto,
+        attributes: ['url', 'filename'],
+      },
+    });
     res.json(alunos);
   }
 
@@ -25,7 +33,14 @@ class AlunoController {
           errors: ['Id nao informado'],
         });
       }
-      const aluno = await Aluno.findByPk(id);
+      const aluno = await Aluno.findByPk(id, {
+        attributes: ['id', 'nome', 'sobrenome', 'email', 'idade'], // dados que quero
+        order: [['id', 'DESC'], [Foto, 'id', 'DESC']], // fator de ordem e se é CRES ou DESC
+        include: {
+          model: Foto,
+          attributes: ['url', 'filename'],
+        },
+      });
 
       if (!aluno) {
         return res.status(400).json({
