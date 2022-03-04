@@ -1,4 +1,7 @@
 import express from 'express';
+import cors from 'cors';
+import helmet from 'helmet';
+
 import dotenv from 'dotenv'; // 1. para o .env
 import homeRoutes from './src/routes/homeRoutes';
 import userRoutes from './src/routes/userRoutes';
@@ -18,6 +21,8 @@ class App {
   }
 
   middlewares() {
+    this.app.use(cors()); // se quiser mais confg, acessar a documentaçao
+    this.app.use(helmet());
     this.app.use(express.urlencoded({ extended: true }));
     this.app.use(express.json());
     this.app.use(express.static('./uploads'));
