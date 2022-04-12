@@ -13,6 +13,20 @@ import './src/database';
 
 dotenv.config(); // 2. pra o .env
 
+const whiteList = [
+  'http://localhost:3001',
+];
+
+const corsOptions = {
+  origin(origin, callback) {
+    if (whiteList.indexOf(origin) !== -1 || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not Allowed by CORS'));
+    }
+  },
+};
+
 class App {
   constructor() {
     this.app = express();
@@ -21,7 +35,7 @@ class App {
   }
 
   middlewares() {
-    this.app.use(cors()); // se quiser mais confg, acessar a documentaçao
+    this.app.use(cors(corsOptions)); // se quiser mais confg, acessar a documentaçao
     this.app.use(helmet());
     this.app.use(express.urlencoded({ extended: true }));
     this.app.use(express.json());
