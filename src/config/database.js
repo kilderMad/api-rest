@@ -1,7 +1,7 @@
-require('dotenv').config();// esse esta aqui para acessamos os dados .env
+require('dotenv').config(); // esse esta aqui para acessamos os dados .env
 
 module.exports = {
-  dialect: 'mariadb',
+  dialect: 'mysql',
   host: process.env.DATABASE_HOST,
   port: process.env.DATABASE_PORT,
   username: process.env.DATABASE_USERNAME,
